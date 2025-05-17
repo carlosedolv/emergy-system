@@ -38,6 +38,16 @@ public class User {
 		this.simulations = new ArrayList<>();
 	}
 	
+	public User(Integer id, String name, String email, String password) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.birthday = null;
+		this.registrationDate = LocalDateTime.now();
+		this.simulations = new ArrayList<>();
+	}
+	
 	@Override
 	public String toString() {
 		return "User [ id= " + id + ", name= " + name + ", email= " + email + ", birthday= " + birthday.format(DateUtil.DEAFULT_DATE_FORMAT) + " , createdAt= " + registrationDate.format(DateUtil.DEFAULT_DATETIME_FORMAT) + " ]";
@@ -87,6 +97,11 @@ public class User {
 	    return registrationDate;
 	}
 	
+	
+	public void setRegistrationDate(LocalDateTime registrationDate) {
+	    this.registrationDate = registrationDate;
+	}
+		
 	public List<Simulation> getSimulations() {
 	    return simulations;
 	}
@@ -101,5 +116,6 @@ public class User {
 	    }
 	    simulations.add(simulation);
 	}
+
 	
 }

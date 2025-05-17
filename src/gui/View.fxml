@@ -7,11 +7,21 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewController">
    <children>
-      <Button fx:id="btnLogin" layoutX="46.0" layoutY="200.0" mnemonicParsing="false" onAction="#onClickBtnLogin" prefHeight="26.0" prefWidth="78.0" text="Login" />
-      <Label layoutX="47.0" layoutY="125.0" text="Password" />
-      <TextField fx:id="txtEmail" layoutX="46.0" layoutY="71.0" promptText="Your email..." />
-      <TextField fx:id="txtPassword" layoutX="46.0" layoutY="143.0" promptText="Your password..." />
-      <Label layoutX="46.0" layoutY="53.0" text="Email" />
-      <Button fx:id="btnLogin1" layoutX="46.0" layoutY="295.0" mnemonicParsing="false" onAction="#onClickBtnLogin" prefHeight="26.0" prefWidth="78.0" text="SignUp" />
+      <Label layoutX="46.0" layoutY="89.0" text="Email" />
+      <TextField fx:id="txtName" layoutX="46.0" layoutY="47.0" promptText="Your name..." />
+      <TextField fx:id="txtPassword" layoutX="46.0" layoutY="160.0" promptText="Your password..." />
+      <Label layoutX="46.0" layoutY="30.0" text="Name" />
+      <Button fx:id="btnListUsers" layoutX="144.0" layoutY="293.0" mnemonicParsing="false" onAction="#onClickBtnShowUsers" prefHeight="26.0" prefWidth="78.0" text="ListUsers" />
+      <TextField fx:id="txtEmail" layoutX="46.0" layoutY="106.0" promptText="Your email..." />
+      <Label layoutX="46.0" layoutY="142.0" text="Password" />
+      <Label layoutX="49.0" layoutY="200.0" text="Birthday" />
+      <TextField fx:id="day" layoutX="65.0" layoutY="228.0" prefHeight="26.0" prefWidth="32.0" promptText="DD" />
+      <Label layoutX="35.0" layoutY="231.0" text="Day:" />
+      <TextField fx:id="month" layoutX="152.0" layoutY="230.0" prefHeight="26.0" prefWidth="39.0" promptText="MM" />
+      <Label layoutX="109.0" layoutY="233.0" text="Month:" />
+      <Label layoutX="196.0" layoutY="232.0" text="Year:" />
+      <TextField fx:id="year" layoutX="231.0" layoutY="228.0" prefHeight="26.0" prefWidth="51.0" promptText="YYYY" />
+      <Button fx:id="btnSignUp1" layoutX="32.0" layoutY="293.0" mnemonicParsing="false" onAction="#onClickBtnLogin" prefHeight="26.0" prefWidth="78.0" text="SignUp" />
+      <Button fx:id="btnResetDb" layoutX="264.0" layoutY="293.0" mnemonicParsing="false" onAction="#onClickBtnClearUsers" prefHeight="26.0" prefWidth="78.0" text="ResetDB" />
    </children>
 </AnchorPane>

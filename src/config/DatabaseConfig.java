@@ -5,10 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
-	// Add final (constant)
-	private static String URL;
-	
-	// Add getConnection method
+
+    private static final String URL = "jdbc:sqlite:emergy_system.db";
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
     }
