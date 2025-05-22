@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationViewController">
+    <children>
+
+        <!-- Criar nova simulação -->
+        <Label layoutX="50.0" layoutY="30.0" text="User ID" />
+        <TextField fx:id="txtUserId" layoutX="50.0" layoutY="50.0" promptText="User ID..." />
+
+        <Label layoutX="50.0" layoutY="90.0" text="Title" />
+        <TextField fx:id="txtTitle" layoutX="50.0" layoutY="110.0" prefWidth="300.0" promptText="Simulation title..." />
+
+        <Label layoutX="50.0" layoutY="150.0" text="Simulation Data (JSON)" />
+        <TextArea fx:id="txtSimulationData" layoutX="50.0" layoutY="170.0" prefWidth="300.0" prefHeight="100.0" promptText="JSON content here..." />
+
+        <Button fx:id="btnSaveSimulation" layoutX="50.0" layoutY="290.0" text="Save Simulation" onAction="#onClickBtnSaveSimulation" />
+
+        <!-- Excluir simulação por ID -->
+        <Label layoutX="400.0" layoutY="30.0" text="Delete by Simulation ID" />
+        <TextField fx:id="txtSimulationIdToDelete" layoutX="400.0" layoutY="50.0" promptText="Simulation ID..." />
+        <Button fx:id="btnDeleteById" layoutX="400.0" layoutY="80.0" text="Delete Simulation" onAction="#onClickBtnDeleteById" />
+
+        <!-- Excluir todas as simulações de um usuário -->
+        <Label layoutX="400.0" layoutY="130.0" text="Delete All Simulations by User ID" />
+        <TextField fx:id="txtUserIdToDeleteAll" layoutX="400.0" layoutY="150.0" promptText="User ID..." />
+        <Button fx:id="btnDeleteByUserId" layoutX="400.0" layoutY="180.0" text="Delete All by User" onAction="#onClickBtnDeleteByUserId" />
+
+        <!-- Limpar todas as simulações do banco -->
+        <Button fx:id="btnClearAllSimulations" layoutX="400.0" layoutY="230.0" prefWidth="200.0" text="Clear All Simulations" onAction="#onClickBtnClearAll" />
+
+        <!-- Listar simulações de um usuário -->
+        <Label layoutX="50.0" layoutY="350.0" text="List Simulations by User ID" />
+        <TextField fx:id="txtUserIdToList" layoutX="50.0" layoutY="370.0" promptText="User ID..." />
+        <Button fx:id="btnListByUser" layoutX="50.0" layoutY="400.0" text="List by User" onAction="#onClickBtnListByUserId" />
+
+        <!-- Listar todas as simulações -->
+        <Button fx:id="btnListAllSimulations" layoutX="50.0" layoutY="450.0" prefWidth="200.0" text="List All Simulations" onAction="#onClickBtnListAll" />
+
+    </children>
+</AnchorPane>

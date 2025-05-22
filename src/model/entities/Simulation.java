@@ -71,6 +71,6 @@ public class Simulation {
 
     @Override
     public String toString() {
-        return "Simulation [ id=" + id + ", title=" + title + ", date=" + simulationDate.format(DateUtil.DEFAULT_DATETIME_FORMAT) + " ]";
+        return "Simulation [ id=" + id + ", userId= " + userId + ", title=" + title + ", date=" + simulationDate.format(DateUtil.DEFAULT_DATETIME_FORMAT) + " ]";
     }
 }

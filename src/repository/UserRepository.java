@@ -19,7 +19,6 @@ public class UserRepository {
         this.connection = conn;
     }
 
-    // Salva um usuário e retorna o ID gerado
     public int save(User user) throws SQLException {
         String sql = "INSERT INTO users (name, email, password, birthday, registration_date) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -46,7 +45,6 @@ public class UserRepository {
         }
     }
 
-    // Busca usuário pelo email
     public User findByEmail(String email) throws SQLException {
         String sql = "SELECT * FROM users WHERE email = ?";
         User user = null;
@@ -75,7 +73,6 @@ public class UserRepository {
         return user;
     }
 
-    // Busca usuário pelo ID
     public User findById(int id) throws SQLException {
         String sql = "SELECT * FROM users WHERE id = ?";
         User user = null;
@@ -112,7 +109,20 @@ public class UserRepository {
             if (affectedRows == 0) {
                 System.out.println("Nenhum usuário encontrado com o ID: " + id);
             } else {
-                System.out.println("Usuário deletado com sucesso. ID: " + id);
+                System.out.println("Usuário removido com sucesso. ID: " + id);
+            }
+        }
+    }
+    
+    public void deleteByEmail(String email) throws SQLException {
+        String sql = "DELETE FROM users WHERE email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                System.out.println("Nenhum usuário encontrado com o email: " + email);
+            } else {
+                System.out.println("Usuário removido com sucesso. Email: " + email);
             }
         }
     }
@@ -121,7 +131,7 @@ public class UserRepository {
     public void resetIdCounter() throws SQLException {
         String sql = "DELETE FROM sqlite_sequence WHERE name = 'users'";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            int affectedRows = stmt.executeUpdate();
+            stmt.executeUpdate();
             System.out.println("Contador de IDs resetado para a tabela users.");
         }
     }
@@ -166,11 +176,10 @@ public class UserRepository {
 
         return users;
     }
-
     
     public void deleteAllAndReset() throws SQLException {
-        deleteAll();        // Método que apaga todos os usuários
-        resetIdCounter();   // Reseta o auto-increment
+        deleteAll();       
+        resetIdCounter();   
     }
 
 
