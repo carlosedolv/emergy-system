@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,20 +15,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import model.entities.Simulation;
-import model.entities.User;
-import repository.SimulationRepository;
-import repository.UserRepository;
+import services.SimulationService;
 
 public class SimulationViewController implements Initializable {
 
     @FXML private TextField txtUserId;
     @FXML private TextField txtTitle;
     @FXML private TextArea txtSimulationData;
-
     @FXML private TextField txtSimulationIdToDelete;
     @FXML private TextField txtUserIdToDeleteAll;
     @FXML private TextField txtUserIdToList;
-
     @FXML private Button btnSaveSimulation;
     @FXML private Button btnDeleteById;
     @FXML private Button btnDeleteByUserId;
@@ -37,16 +32,13 @@ public class SimulationViewController implements Initializable {
     @FXML private Button btnListByUser;
     @FXML private Button btnListAllSimulations;
 
-    private SimulationRepository simRepo;
-    private UserRepository userRepo;
+    private SimulationService simulationService;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            Connection conn = DatabaseConfig.getConnection();
-            DatabaseInitializer.initDatabase(conn);
-            simRepo = new SimulationRepository(conn);
-            userRepo = new UserRepository(conn);
+            simulationService = new SimulationService(DatabaseConfig.getConnection());
+            DatabaseInitializer.initDatabase(DatabaseConfig.getConnection());
         } catch (Exception e) {
             Alerts.showAlert("Erro de conexão", "Não foi possível conectar ao banco.", e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -64,20 +56,13 @@ public class SimulationViewController implements Initializable {
                 return;
             }
 
-            // Verificar se o usuário existe antes de salvar a simulação
-            User user = userRepo.findById(userId);
-            if (user == null) {
-                Alerts.showAlert("Usuário não encontrado", "ID informado não existe.", "", Alert.AlertType.WARNING);
-                return;
-            }
-
-            Simulation sim = new Simulation(userId, title, data, LocalDateTime.now());
-            int id = simRepo.save(sim);
-            Alerts.showAlert("Sucesso", "Simulação salva com ID: " + id, "", Alert.AlertType.INFORMATION);
+            int simId = simulationService.createSimulation(new Simulation(userId, title, data, LocalDateTime.now()));
+            Alerts.showAlert("Sucesso", "Simulação salva com ID: " + simId, "", Alert.AlertType.INFORMATION);
             clearFields();
 
         } catch (Exception e) {
             Alerts.showAlert("Erro", "Erro ao salvar simulação: " + e.getMessage(), "", Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
@@ -85,10 +70,10 @@ public class SimulationViewController implements Initializable {
     public void onClickBtnDeleteById() {
         try {
             int id = Integer.parseInt(txtSimulationIdToDelete.getText().trim());
-            simRepo.delete(id);
+            simulationService.deleteById(id);
             Alerts.showAlert("Sucesso", "Simulação deletada.", "", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao deletar: " + e.getMessage(), "", Alert.AlertType.ERROR);
+            Alerts.showAlert("Erro", "Erro ao deletar simulação: " + e.getMessage(), "", Alert.AlertType.ERROR);
         }
     }
 
@@ -96,8 +81,8 @@ public class SimulationViewController implements Initializable {
     public void onClickBtnDeleteByUserId() {
         try {
             int userId = Integer.parseInt(txtUserIdToDeleteAll.getText().trim());
-            simRepo.deleteByUserId(userId);
-            Alerts.showAlert("Sucesso", "Todas as simulações do usuário foram deletadas.", "", Alert.AlertType.INFORMATION);
+            simulationService.deleteByUserId(userId);
+            Alerts.showAlert("Sucesso", "Simulações do usuário deletadas.", "", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             Alerts.showAlert("Erro", "Erro ao deletar simulações do usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
         }
@@ -106,10 +91,10 @@ public class SimulationViewController implements Initializable {
     @FXML
     public void onClickBtnClearAll() {
         try {
-            simRepo.deleteAll();
+            simulationService.deleteAll();
             Alerts.showAlert("Sucesso", "Todas as simulações foram removidas.", "", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao limpar o banco: " + e.getMessage(), "", Alert.AlertType.ERROR);
+            Alerts.showAlert("Erro", "Erro ao limpar banco: " + e.getMessage(), "", Alert.AlertType.ERROR);
         }
     }
 
@@ -117,7 +102,7 @@ public class SimulationViewController implements Initializable {
     public void onClickBtnListByUserId() {
         try {
             int userId = Integer.parseInt(txtUserIdToList.getText().trim());
-            List<Simulation> sims = simRepo.findSimulationsByUserId(userId);
+            List<Simulation> sims = simulationService.findByUserId(userId);
             if (sims.isEmpty()) {
                 System.out.println("Nenhuma simulação encontrada para o usuário " + userId);
             } else {
@@ -132,11 +117,11 @@ public class SimulationViewController implements Initializable {
     @FXML
     public void onClickBtnListAll() {
         try {
-            List<Simulation> sims = simRepo.findAll();
+            List<Simulation> sims = simulationService.findAll();
             if (sims.isEmpty()) {
                 System.out.println("Nenhuma simulação encontrada.");
             } else {
-                System.out.println("Simulações cadastradas:");
+                System.out.println("Todas as simulações:");
                 sims.forEach(System.out::println);
             }
         } catch (Exception e) {
