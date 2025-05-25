@@ -115,15 +115,15 @@ public class SimulationViewController implements Initializable {
 	@FXML
 	public void onClickBtnListAll() {
 		try {
-			List<Simulation> sims = simulationService.findByUserId(userId);
+/*			List<Simulation> sims = simulationService.findByUserId(userId);
 			if (sims.isEmpty()) {
 				System.out.println("Nenhuma simulação encontrada.");
             	Alerts.showAlert("Erro", "Simulações não encontradas", "Este usuário não possui simulações", Alert.AlertType.WARNING);
 			} else {
 				System.out.println("Todas as simulações:");
 				sims.forEach(System.out::println);
-				mainApp.showReportsView(userId);
-			}
+*/				mainApp.showReportsView(userId);
+//			}
 			
 		} catch (Exception e) {
 			Alerts.showAlert("Erro", "Erro ao listar todas as simulações: " + e.getMessage(), "",

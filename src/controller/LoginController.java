@@ -69,7 +69,8 @@ public class LoginController implements Initializable {
             Alerts.showAlert("Sucesso", "Usuário ID: " + id + " logado com sucesso!", "", Alert.AlertType.CONFIRMATION);
             clearFields();
             
-            mainApp.showReportsView(id);
+            
+            mainApp.showProfileView(id);;
 
         } catch (IllegalArgumentException e) {
             Alerts.showAlert("Erro de validação", e.getMessage(), "", Alert.AlertType.WARNING);

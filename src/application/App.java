@@ -1,8 +1,11 @@
 package application;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import controller.CadastroController;
 import controller.LoginController;
+import controller.ProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.entities.User;
 import simulation.calculator.SimulationViewController;
 import simulationResultDTO.ReportsController;
 
@@ -80,6 +84,29 @@ public class App extends Application {
         	controller.getUserId();
         	
             rootLayout.setCenter(loginView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showProfileView(int userId) throws SQLException {
+        try {
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/ProfileView.fxml"));
+        	Parent profileView = loader.load();
+        	
+        	ProfileController controller = loader.getController();
+        	
+        	try {
+                controller.setUserId(userId);
+            } catch (SQLException e) {
+                System.err.println("Erro ao definir o userId no ProfileController: " + e.getMessage());
+                e.printStackTrace();
+                return;
+            }
+        	
+        	controller.setMainApp(this);       	
+            rootLayout.setCenter(profileView);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

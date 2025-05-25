@@ -1,53 +1,50 @@
-package simulationResultDTO;
+package controller;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import application.App;
 import config.DatabaseConfig;
 import config.DatabaseInitializer;
 import gui.util.Alerts;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import model.entities.Simulation;
+import model.entities.User;
+import repository.UserRepository;
 import services.SimulationService;
+import services.UserService;
 
-public class ReportsController implements Initializable {
+public class ProfileController implements Initializable {
 
 	private App mainApp;
+	private User user;
 	private int userId;
-	private int simId;
-	private ObservableList<Simulation> observableSimulation;
-	@FXML
-	private ListView<Simulation> listViewReports;
 	private SimulationService simulationService;
 	@FXML
-	private Label lblTitulo;
+	private Label lblName;
 	@FXML
-	private Label lblTipo;
+	private Label lblEmail;
 	@FXML
-	private Label lblLitros;
-	@FXML
-	private Label lblResultado;
+	private Label lblBirthDay;
 
 	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(int userId) throws SQLException {
+        Connection conn = DatabaseConfig.getConnection();
+        DatabaseInitializer.initDatabase(conn);
+        UserRepository userRepository = new UserRepository(conn);
+		
 		this.userId = userId;
-		loadListSimulationView();
-	}
-
-	public void setSimId(Simulation sim) {
-		this.simId = sim.getId();
+		this.user = userRepository.findById(userId);
+		
+		lblName.setText(user.getName());
+		lblEmail.setText(user.getEmail());
+		lblBirthDay.setText(user.getBirthday().toString());
 	}
 
 	@Override
@@ -56,60 +53,15 @@ public class ReportsController implements Initializable {
 			simulationService = new SimulationService(DatabaseConfig.getConnection());
 			DatabaseInitializer.initDatabase(DatabaseConfig.getConnection());
 
-			listViewReports.getSelectionModel().selectedItemProperty()
-					.addListener((observable, OldValue, NewValue) -> selecteItemListViewSimulation(NewValue));
-
 		} catch (Exception e) {
 			Alerts.showAlert("Erro de conexão", "Não foi possível conectar ao banco.", e.getMessage(),
 					Alert.AlertType.ERROR);
 		}
 	}
 
-	public void loadListSimulationView() {
-
-		try {
-			System.out.println("userId: " + userId);
-			List<Simulation> sims = simulationService.findByUserId(userId);
-			sims.forEach(System.out::println);
-			observableSimulation = FXCollections.observableArrayList(sims);
-			listViewReports.setItems(observableSimulation);
-
-			listViewReports.setCellFactory(param -> new ListCell<Simulation>() {
-				@Override
-				protected void updateItem(Simulation sim, boolean empty) {
-					super.updateItem(sim, empty);
-					if (empty || sim == null) {
-						setText(null);
-					} else {
-						setText(sim.getTitle());
-					}
-				}
-			});
-		} catch (Exception e) {
-			Alerts.showAlert("Erro", "Erro ao listar todas as simulações: " + e.getMessage(), "",
-					Alert.AlertType.ERROR);
-		}
-
-	}
-
-	public void selecteItemListViewSimulation(Simulation sims) {
-		lblTitulo.setText(sims.getTitle());
-		lblTipo.setText(sims.getTipo());
-		lblLitros.setText(String.format("%.2f", sims.getLitros()));
-		lblResultado.setText(String.format("%.2f", sims.getResult()) + " x 10¹² sej");
-	}
-
 	@FXML
-	public void onClickBtnDeleteById() {
-		try {
-			Simulation sim = listViewReports.getSelectionModel().getSelectedItem();
-			System.out.println(simId);
-			simulationService.deleteById(sim.getId());
-			loadListSimulationView();
-			Alerts.showAlert("Sucesso", "Simulação deletada.", "", Alert.AlertType.INFORMATION);
-		} catch (Exception e) {
-			Alerts.showAlert("Erro", "Erro ao deletar simulação: ", "Nenhuma simulação selecionada",Alert.AlertType.ERROR);
-		}
+	public void onClickBtnRelatorio() {
+		mainApp.showReportsView(userId);
 	}
 
 	@FXML
@@ -118,8 +70,8 @@ public class ReportsController implements Initializable {
 	}
 
 	@FXML
-	public void onClickBtnPerfil() throws SQLException {
-		mainApp.showProfileView(userId);
+	public void onClickBtnLogout() {
+		mainApp.showUserView();
 	}
 
 	/*
