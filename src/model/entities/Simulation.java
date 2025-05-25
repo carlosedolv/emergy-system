@@ -8,26 +8,53 @@ public class Simulation {
     private Integer id;
     private Integer userId; 
     private String title;
-    private String simulationData; // JSON contendo entradas, resultado e gráfico
+    private float litros;
+    private String tipo;
     private LocalDateTime simulationDate;
+    private float result;
 
-    public Simulation() {
-    }
-
-    public Simulation(Integer userId, String title, String simulationData, LocalDateTime simulationDate) {
+	public Simulation(Integer userId, String title, float litros, String tipo, float result, LocalDateTime simulationDate) {
         this.userId = userId;
         this.title = title;
-        this.simulationData = simulationData;
+        this.litros = litros;
+        this.tipo = tipo;
+        this.result = result;
         this.simulationDate = simulationDate;
     }
 
-    public Simulation(Integer id, Integer userId, String title, String simulationData, LocalDateTime simulationDate) {
+	public Simulation(Integer id, Integer userId, String title, float litros, String tipo, float result, LocalDateTime simulationDate) {
         this.id = id;
         this.userId = userId;
         this.title = title;
-        this.simulationData = simulationData;
+        this.litros = litros;
+        this.tipo = tipo;
+        this.result = result;
         this.simulationDate = simulationDate;
     }
+
+    public float getResult() {
+		return result;
+	}
+
+	public void setResult(float result) {
+		this.result = result;
+	}
+
+    public float getLitros() {
+		return litros;
+	}
+
+	public void setLitros(float litros) {
+		this.litros = litros;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
     
     public Integer getId() {
         return id;
@@ -53,14 +80,6 @@ public class Simulation {
         this.title = title;
     }
 
-    public String getSimulationData() {
-        return simulationData;
-    }
-
-    public void setSimulationData(String simulationData) {
-        this.simulationData = simulationData;
-    }
-
     public LocalDateTime getSimulationDate() {
         return simulationDate;
     }
@@ -71,6 +90,6 @@ public class Simulation {
 
     @Override
     public String toString() {
-        return "Simulation [ id=" + id + ", userId= " + userId + ", title=" + title + ", date=" + simulationDate.format(DateUtil.DEFAULT_DATETIME_FORMAT) + " ]";
+        return "Simulation [ id=" + id + ", userId= " + userId + ", title=" + title + ", litros=" + litros + ", tipo=" + tipo + ", date=" + simulationDate.format(DateUtil.DEFAULT_DATETIME_FORMAT) + " ]";
     }
 }

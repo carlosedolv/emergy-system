@@ -24,7 +24,9 @@ public class DatabaseInitializer {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER NOT NULL,
                     title TEXT NOT NULL,
-                    simulation_data TEXT NOT NULL,
+                    liters float(6,2) NOT NULL,
+                    type TEXT NOT NULL,
+                    result float(8,3) NOT NULL,
                     simulation_date TEXT,
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 );

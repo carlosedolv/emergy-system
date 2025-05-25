@@ -45,12 +45,13 @@ public class UserService {
     }
 
     // Login: compara senha fornecida com hash
-    public User login(String email, String plainPassword) throws SQLException {
+    public Integer login(String email, String plainPassword) throws SQLException {
         User user = userRepository.findByEmail(email);
         if (user != null && PasswordUtil.checkPassword(plainPassword, user.getPassword())) {
-            return user;
+            return user.getId();
+        } else {
+        	return 0;
         }
-        return null;
     }
 
     // Busca usuário por ID

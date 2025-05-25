@@ -20,11 +20,13 @@ public class SimulationRepository {
 
     // Salva uma simulação e retorna o ID gerado
     public int save(Simulation simulation) throws SQLException {
-        String sql = "INSERT INTO simulations (user_id, title, simulation_data, simulation_date) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO simulations (user_id, title, liters, type, result, simulation_date) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, simulation.getUserId());
             stmt.setString(2, simulation.getTitle());
-            stmt.setString(3, simulation.getSimulationData());
+            stmt.setFloat(3, simulation.getLitros());
+            stmt.setString(2, simulation.getTipo());
+            stmt.setFloat(3, simulation.getResult());
             stmt.setString(4, simulation.getSimulationDate().toString());
 
             int affectedRows = stmt.executeUpdate();
@@ -58,7 +60,9 @@ public class SimulationRepository {
                     rs.getInt("id"),
                     rs.getInt("user_id"),
                     rs.getString("title"),
-                    rs.getString("simulation_data"),
+                    rs.getFloat("liters"),
+                    rs.getString("type"),
+                    rs.getFloat("result"),
                     LocalDateTime.parse(rs.getString("simulation_date"))
                 );
             }
@@ -80,7 +84,9 @@ public class SimulationRepository {
                     rs.getInt("id"),
                     rs.getInt("user_id"),
                     rs.getString("title"),
-                    rs.getString("simulation_data"),
+                    rs.getFloat("liters"),
+                    rs.getString("type"),
+                    rs.getFloat("result"),
                     LocalDateTime.parse(rs.getString("simulation_date"))
                 );
                 simulations.add(sim);
@@ -103,7 +109,9 @@ public class SimulationRepository {
                     rs.getInt("id"),
                     rs.getInt("user_id"),
                     rs.getString("title"),
-                    rs.getString("simulation_data"),
+                    rs.getFloat("liters"),
+                    rs.getString("type"),
+                    rs.getFloat("result"),
                     LocalDateTime.parse(rs.getString("simulation_date"))
                 );
                 simulations.add(sim);

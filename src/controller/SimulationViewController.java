@@ -43,7 +43,7 @@ public class SimulationViewController implements Initializable {
             Alerts.showAlert("Erro de conexão", "Não foi possível conectar ao banco.", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
+    /*
     @FXML
     public void onClickBtnSaveSimulation() {
         try {
@@ -65,7 +65,7 @@ public class SimulationViewController implements Initializable {
             e.printStackTrace();
         }
     }
-
+*/
     @FXML
     public void onClickBtnDeleteById() {
         try {
