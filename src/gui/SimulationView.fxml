@@ -22,7 +22,7 @@
         <Button fx:id="btnSaveSimulation" layoutX="400.0" layoutY="357.0" onAction="#onClickBtnSaveSimulation" text="Save Simulation" />
 
         <!-- Listar todas as simulações -->
-        <Button fx:id="btnListAllSimulations" layoutX="351.0" layoutY="425.0" onAction="#onClickBtnListAll" prefWidth="200.0" text="List All Simulations" />
+        <Button fx:id="btnListAllSimulations" layoutX="351.0" layoutY="425.0" onAction="#onClickBtnListAll" prefWidth="200.0" text="Ver Lista de Simulações" />
       <RadioButton fx:id="rBtnBDieselB" layoutX="373.0" layoutY="253.0" mnemonicParsing="false" text="BDiesel Babaçu">
          <toggleGroup>
             <ToggleGroup fx:id="bioCombustivel" />

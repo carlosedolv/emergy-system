@@ -10,8 +10,8 @@ public class Simulation {
     private String title;
     private float litros;
     private String tipo;
-    private LocalDateTime simulationDate;
     private float result;
+    private LocalDateTime simulationDate;
 
 	public Simulation(Integer userId, String title, float litros, String tipo, float result, LocalDateTime simulationDate) {
         this.userId = userId;

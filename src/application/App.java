@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import simulation.calculator.SimulationViewController;
+import simulationResultDTO.ReportsController;
 
 public class App extends Application {
 
@@ -29,7 +30,7 @@ public class App extends Application {
         this.primaryStage.setTitle("Sistema de Simulações");
 
         initRootLayout();
-        showLoginView();
+        showUserView();
     }
 
     private void initRootLayout() {
@@ -60,7 +61,7 @@ public class App extends Application {
         
     }
 
-    private void showUserView() {
+    public void showUserView() {
         try {
             Parent userView = FXMLLoader.load(getClass().getResource("/gui/View.fxml"));
             rootLayout.setCenter(userView);
@@ -104,10 +105,25 @@ public class App extends Application {
             Parent simulationView = loader.load();
 
             SimulationViewController controller = loader.getController();
-            controller.setMainApp(this);
             controller.setUserId(id);
+            controller.setMainApp(this);
 
             rootLayout.setCenter(simulationView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showReportsView(int id) {
+        try {
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/ReportsView.fxml"));
+            Parent reportsView = loader.load();
+
+            ReportsController controller = loader.getController();
+            controller.setUserId(id);
+            controller.setMainApp(this);
+
+            rootLayout.setCenter(reportsView);
         } catch (IOException e) {
             e.printStackTrace();
         }

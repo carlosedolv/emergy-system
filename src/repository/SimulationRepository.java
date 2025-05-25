@@ -25,9 +25,9 @@ public class SimulationRepository {
             stmt.setInt(1, simulation.getUserId());
             stmt.setString(2, simulation.getTitle());
             stmt.setFloat(3, simulation.getLitros());
-            stmt.setString(2, simulation.getTipo());
-            stmt.setFloat(3, simulation.getResult());
-            stmt.setString(4, simulation.getSimulationDate().toString());
+            stmt.setString(4, simulation.getTipo());
+            stmt.setFloat(5, simulation.getResult());
+            stmt.setString(6, simulation.getSimulationDate().toString());
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
