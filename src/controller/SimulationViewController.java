@@ -106,7 +106,6 @@ public class SimulationViewController implements Initializable {
             if (sims.isEmpty()) {
                 System.out.println("Nenhuma simulação encontrada para o usuário " + userId);
             } else {
-                System.out.println("Simulações do usuário " + userId + ":");
                 sims.forEach(System.out::println);
             }
         } catch (Exception e) {

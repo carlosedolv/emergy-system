@@ -66,7 +66,7 @@ public class LoginController implements Initializable {
                 return;
             }
 
-            Alerts.showAlert("Sucesso", "Usuário ID: " + id + " logado com sucesso!", "", Alert.AlertType.CONFIRMATION);
+            Alerts.showAlert("Sucesso", "Logado com sucesso. seja bem vindo(a)!", "", Alert.AlertType.INFORMATION);
             clearFields();
             
             
@@ -79,110 +79,6 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
-    /*
-    @FXML
-    public void onClickBtnShowUsers() {
-        try {
-            List<User> users = userService.findAll();
-            if (users.isEmpty()) {
-                System.out.println("Nenhum usuário encontrado.");
-            } else {
-                System.out.println("Usuários cadastrados:");
-                users.forEach(System.out::println);
-            }
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao buscar usuários: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnClearUsers() {
-        try {
-            userService.deleteAll();
-            Alerts.showAlert("Sucesso", "Todos os usuários foram apagados!", "", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao apagar usuários: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnFindById() {
-        try {
-            String idStr = txtFindById.getText().trim();
-            if (idStr.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o ID do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            int id = Integer.parseInt(idStr);
-            User user = userService.findById(id);
-            if (user == null) {
-                Alerts.showAlert("Usuário não encontrado", "Usuário de ID: " + id + " não encontrado.", "", Alert.AlertType.ERROR);
-            } else {
-                System.out.println("Usuário encontrado: " + user);
-                Alerts.showAlert("Sucesso!", "Usuário encontrado.", "", Alert.AlertType.INFORMATION);
-            }
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao buscar usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnFindByEmail() {
-        try {
-            String email = txtFindByEmail.getText().trim();
-            if (email.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o Email do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            User user = userService.findByEmail(email);
-            if (user == null) {
-                Alerts.showAlert("Usuário não encontrado", "Usuário de email: " + email + " não encontrado.", "", Alert.AlertType.ERROR);
-            } else {
-                System.out.println("Usuário encontrado: " + user);
-                Alerts.showAlert("Sucesso!", "Usuário encontrado.", "", Alert.AlertType.INFORMATION);
-            }
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao buscar usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnRemoveById() {
-        try {
-            String idStr = txtIdToRemove.getText().trim();
-            if (idStr.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o ID do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            int id = Integer.parseInt(idStr);
-            userService.deleteById(id);
-            Alerts.showAlert("Sucesso!", "Usuário removido.", "", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao remover usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnRemoveByEmail() {
-        try {
-            String email = txtEmailToRemove.getText().trim();
-            if (email.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o email do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            userService.deleteByEmail(email);
-            Alerts.showAlert("Sucesso!", "Usuário removido.", "", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao remover usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-*/
     
     private void clearFields() {
         txtEmail.clear();

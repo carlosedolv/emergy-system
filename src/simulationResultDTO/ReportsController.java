@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,19 +18,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.FileChooser;
 import model.entities.Simulation;
 import services.SimulationService;
 import util.ChartGenerator;
 import util.PdfExporter;
-import javafx.scene.control.CheckBox;
-import java.util.ArrayList;
-import javafx.scene.control.CheckBox;
-import java.util.ArrayList;
-import javafx.scene.control.CheckBox;
-import java.util.ArrayList;
 
 
 
@@ -65,9 +62,6 @@ public class ReportsController implements Initializable {
 	private CheckBox chkPie;
 	@FXML
 	private CheckBox chkLine;
-
-	
-	
 
 	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
@@ -193,7 +187,7 @@ public class ReportsController implements Initializable {
 
 	
 	@FXML
-	public void onClickBtnExportarSimulacoes() {
+	public void onClickBtnExportarSimulacoess() {
 	    try {
 	        List<Simulation> selectedSims = listViewReports.getSelectionModel().getSelectedItems();
 
@@ -228,6 +222,44 @@ public class ReportsController implements Initializable {
 	        fileDestination.getParentFile().mkdirs();
 
 	        // Chamada corrigida (método do PdfExporter precisa aceitar múltiplas imagens)
+	        PdfExporter.exportSimulationComparativo(selectedSims, charts, fileDestination);
+
+	        Alerts.showAlert("Exportação concluída", "PDF exportado com sucesso!", "", Alert.AlertType.INFORMATION);
+
+	    } catch (Exception e) {
+	        Alerts.showAlert("Erro", "Erro ao exportar simulações", e.getMessage(), Alert.AlertType.ERROR);
+	        e.printStackTrace();
+	    }
+	}
+
+	@FXML
+	public void onClickBtnExportarSimulacoes() {
+	    try {
+	        List<Simulation> selectedSims = listViewReports.getSelectionModel().getSelectedItems();
+
+	        if (selectedSims == null || selectedSims.isEmpty()) {
+	            Alerts.showAlert("Erro", "Nenhuma simulação selecionada", "Selecione uma ou mais simulações para exportar.", Alert.AlertType.WARNING);
+	            return;
+	        }
+
+	        // Gera os gráficos (os que estiverem marcados)
+	        List<BufferedImage> charts = new ArrayList<>();
+	        if (chkPie.isSelected()) charts.add(ChartGenerator.generateChart(selectedSims, 600, 400));
+	        if (chkLine.isSelected()) charts.add(ChartGenerator.generatePieChart(selectedSims, 600, 400));
+	        if (chkBar.isSelected()) charts.add(ChartGenerator.generateLineChart(selectedSims, 600, 400));
+
+	        // Abre o FileChooser para selecionar o destino
+	        FileChooser fileChooser = new FileChooser();
+	        fileChooser.setTitle("Salvar Relatório PDF");
+	        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+	        fileChooser.setInitialFileName("Relatorio_Simulacoes.pdf");
+	        File fileDestination = fileChooser.showSaveDialog(null);
+
+	        if (fileDestination == null) {
+	            return; // usuário cancelou
+	        }
+
+	        // Exporta o PDF
 	        PdfExporter.exportSimulationComparativo(selectedSims, charts, fileDestination);
 
 	        Alerts.showAlert("Exportação concluída", "PDF exportado com sucesso!", "", Alert.AlertType.INFORMATION);

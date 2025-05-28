@@ -79,7 +79,7 @@ public class ViewController implements Initializable {
             user.setRegistrationDate(LocalDateTime.now());
             int id = userService.registerUser(user);
 
-            Alerts.showAlert("Sucesso", "Usuário ID: " + id + " salvo com sucesso!", "", Alert.AlertType.CONFIRMATION);
+            Alerts.showAlert("Sucesso", "Cadastrado com sucesso, faça o login.", "", Alert.AlertType.INFORMATION);
             clearFields();
 
         } catch (IllegalArgumentException e) {
