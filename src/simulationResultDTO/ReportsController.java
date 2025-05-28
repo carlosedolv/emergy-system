@@ -1,11 +1,12 @@
 package simulationResultDTO;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+
 import application.App;
 import config.DatabaseConfig;
 import config.DatabaseInitializer;
@@ -15,9 +16,22 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import model.entities.Simulation;
 import services.SimulationService;
+import util.ChartGenerator;
+import util.PdfExporter;
+import javafx.scene.control.CheckBox;
+import java.util.ArrayList;
+import javafx.scene.control.CheckBox;
+import java.util.ArrayList;
+import javafx.scene.control.CheckBox;
+import java.util.ArrayList;
+
+
 
 public class ReportsController implements Initializable {
 
@@ -25,9 +39,12 @@ public class ReportsController implements Initializable {
 	private int userId;
 	private int simId;
 	private ObservableList<Simulation> observableSimulation;
+	
 	@FXML
 	private ListView<Simulation> listViewReports;
+	
 	private SimulationService simulationService;
+	
 	@FXML
 	private Label lblTitulo;
 	@FXML
@@ -36,6 +53,21 @@ public class ReportsController implements Initializable {
 	private Label lblLitros;
 	@FXML
 	private Label lblResultado;
+	@FXML
+	private Button btnExport;
+	@FXML
+	private Button btnLogout;
+	@FXML
+	private Button btnCalculo;
+	@FXML
+	private CheckBox chkBar;
+	@FXML
+	private CheckBox chkPie;
+	@FXML
+	private CheckBox chkLine;
+
+	
+	
 
 	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
@@ -58,6 +90,10 @@ public class ReportsController implements Initializable {
 
 			listViewReports.getSelectionModel().selectedItemProperty()
 					.addListener((observable, OldValue, NewValue) -> selecteItemListViewSimulation(NewValue));
+			
+			listViewReports.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
+
+
 
 		} catch (Exception e) {
 			Alerts.showAlert("Erro de conexão", "Não foi possível conectar ao banco.", e.getMessage(),
@@ -66,7 +102,6 @@ public class ReportsController implements Initializable {
 	}
 
 	public void loadListSimulationView() {
-
 		try {
 			System.out.println("userId: " + userId);
 			List<Simulation> sims = simulationService.findByUserId(userId);
@@ -121,50 +156,88 @@ public class ReportsController implements Initializable {
 	public void onClickBtnPerfil() throws SQLException {
 		mainApp.showProfileView(userId);
 	}
+	
+	@FXML
+	public void onClickBtnExportarSimulacaoo() {
+		try {
+			Simulation sim = listViewReports.getSelectionModel().getSelectedItem();
 
-	/*
-	 * @FXML public void onClickBtnSaveSimulation() { try { int userId =
-	 * Integer.parseInt(txtUserId.getText().trim()); String title =
-	 * txtTitle.getText().trim(); String data = txtSimulationData.getText().trim();
-	 * 
-	 * if (title.isEmpty() || data.isEmpty()) {
-	 * Alerts.showAlert("Campos obrigatórios",
-	 * "Preencha título e dados da simulação.", "", Alert.AlertType.WARNING);
-	 * return; }
-	 * 
-	 * int simId = simulationService.createSimulation(new Simulation(userId, title,
-	 * data, LocalDateTime.now())); Alerts.showAlert("Sucesso",
-	 * "Simulação salva com ID: " + simId, "", Alert.AlertType.INFORMATION);
-	 * clearFields();
-	 * 
-	 * } catch (Exception e) { Alerts.showAlert("Erro", "Erro ao salvar simulação: "
-	 * + e.getMessage(), "", Alert.AlertType.ERROR); e.printStackTrace(); } }
-	 */
+			if (sim == null) {
+				Alerts.showAlert("Erro", "Nenhuma simulação selecionada", "Por favor selecione uma simulação para exportar.", Alert.AlertType.WARNING);
+				return;
+			}
 
-	/*
-	 * @FXML public void onClickBtnDeleteByUserId() { try { int userId =
-	 * Integer.parseInt(txtUserIdToDeleteAll.getText().trim());
-	 * simulationService.deleteByUserId(userId); Alerts.showAlert("Sucesso",
-	 * "Simulações do usuário deletadas.", "", Alert.AlertType.INFORMATION); } catch
-	 * (Exception e) { Alerts.showAlert("Erro",
-	 * "Erro ao deletar simulações do usuário: " + e.getMessage(), "",
-	 * Alert.AlertType.ERROR); } }
-	 * 
-	 * @FXML public void onClickBtnClearAll() { try { simulationService.deleteAll();
-	 * Alerts.showAlert("Sucesso", "Todas as simulações foram removidas.", "",
-	 * Alert.AlertType.INFORMATION); } catch (Exception e) {
-	 * Alerts.showAlert("Erro", "Erro ao limpar banco: " + e.getMessage(), "",
-	 * Alert.AlertType.ERROR); } }
-	 * 
-	 * @FXML public void onClickBtnListAll() { try { List<Simulation> sims =
-	 * simulationService.findAll(); if (sims.isEmpty()) {
-	 * System.out.println("Nenhuma simulação encontrada."); } else {
-	 * System.out.println("Todas as simulações:");
-	 * sims.forEach(System.out::println); } } catch (Exception e) {
-	 * Alerts.showAlert("Erro", "Erro ao listar todas as simulações: " +
-	 * e.getMessage(), "", Alert.AlertType.ERROR); } }
-	 * 
-	 * private void clearFields() { txtUserId.clear(); txtTitle.clear();
-	 * txtSimulationData.clear(); }
-	 */
+			// Gera o gráfico
+			BufferedImage chartImage = ChartGenerator.generateChart(sim, 400, 400);
+
+			// Exporta o
+			String fileName = "exports/Simulacao_" + sim.getId() + "_" + sim.getTitle().replaceAll("\\s+", "_") + ".pdf";
+			File fileDestination = new File(fileName);
+
+			// Cria a pasta caso não exista
+			fileDestination.getParentFile().mkdirs();
+
+			// Exporta a simulação
+			// PdfExporter.exportSimulationComparativo(sim, chartImage, fileDestination);
+			
+			Alerts.showAlert("Exportação concluída", "PDF exportado com sucesso!", "", Alert.AlertType.INFORMATION);
+
+		} catch (Exception e) {
+			Alerts.showAlert("Erro", "Erro ao exportar simulação", e.getMessage(), Alert.AlertType.ERROR);
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+
+	
+	@FXML
+	public void onClickBtnExportarSimulacoes() {
+	    try {
+	        List<Simulation> selectedSims = listViewReports.getSelectionModel().getSelectedItems();
+
+	        if (selectedSims == null || selectedSims.isEmpty()) {
+	            Alerts.showAlert("Erro", "Nenhuma simulação selecionada", "Selecione uma ou mais simulações para exportar.", Alert.AlertType.WARNING);
+	            return;
+	        }
+
+	        List<BufferedImage> charts = new ArrayList<>();
+
+	        if (chkBar.isSelected()) {
+	            charts.add(ChartGenerator.generateChart(selectedSims, 600, 400));
+	        }
+
+	        if (chkPie.isSelected()) {
+	            charts.add(ChartGenerator.generatePieChart(selectedSims, 600, 400));
+	        }
+
+	        if (chkLine.isSelected()) {
+	            charts.add(ChartGenerator.generateLineChart(selectedSims, 600, 400));
+	        }
+
+	        if (charts.isEmpty()) {
+	            Alerts.showAlert("Aviso", "Nenhum gráfico selecionado", "Selecione pelo menos um tipo de gráfico.", Alert.AlertType.WARNING);
+	            return;
+	        }
+
+	        // Gera nome do arquivo
+	        String timestamp = java.time.LocalDateTime.now().toString().replace(":", "-");
+	        String fileName = "exports/Comparativo_" + selectedSims.size() + "_simulacoes_" + timestamp + ".pdf";
+	        File fileDestination = new File(fileName);
+	        fileDestination.getParentFile().mkdirs();
+
+	        // Chamada corrigida (método do PdfExporter precisa aceitar múltiplas imagens)
+	        PdfExporter.exportSimulationComparativo(selectedSims, charts, fileDestination);
+
+	        Alerts.showAlert("Exportação concluída", "PDF exportado com sucesso!", "", Alert.AlertType.INFORMATION);
+
+	    } catch (Exception e) {
+	        Alerts.showAlert("Erro", "Erro ao exportar simulações", e.getMessage(), Alert.AlertType.ERROR);
+	        e.printStackTrace();
+	    }
+	}
+
+
+
 }

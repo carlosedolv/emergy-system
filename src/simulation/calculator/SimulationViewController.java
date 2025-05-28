@@ -81,7 +81,7 @@ public class SimulationViewController implements Initializable {
 			String tipo = rb.getText();
 
 			if (title.isEmpty() || litros == 0 || selecionado == null) {
-				Alerts.showAlert("Campos obrigatórios", "Preencha títul, quantidade de litros e o tipo de combustível.",
+				Alerts.showAlert("Campos obrigatórios", "Preencha título, quantidade de litros e o tipo de combustível.",
 						"", Alert.AlertType.WARNING);
 				return;
 			}

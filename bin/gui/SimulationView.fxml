@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SimulationViewController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="simulation.calculator.SimulationViewController">
     <children>
 
-        <!-- Criar nova simulação -->
-        <Label layoutX="50.0" layoutY="30.0" text="User ID" />
-        <TextField fx:id="txtUserId" layoutX="50.0" layoutY="50.0" promptText="User ID..." />
+        <Label alignment="CENTER" layoutX="359.0" layoutY="51.0" prefHeight="27.0" prefWidth="179.0" text="Cálculo Simulações">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+        <TextField fx:id="txtResult" editable="false" layoutX="374.0" layoutY="305.0" prefHeight="26.0" prefWidth="150.0" promptText="Resultado da Simulação" />
 
-        <Label layoutX="50.0" layoutY="90.0" text="Title" />
-        <TextField fx:id="txtTitle" layoutX="50.0" layoutY="110.0" prefWidth="300.0" promptText="Simulation title..." />
+        <Label layoutX="373.0" layoutY="175.0" text="Quantidade de Litros (L)" />
 
-        <Label layoutX="50.0" layoutY="150.0" text="Simulation Data (JSON)" />
-        <TextArea fx:id="txtSimulationData" layoutX="50.0" layoutY="170.0" prefWidth="300.0" prefHeight="100.0" promptText="JSON content here..." />
-
-        <Button fx:id="btnSaveSimulation" layoutX="50.0" layoutY="290.0" text="Save Simulation" onAction="#onClickBtnSaveSimulation" />
-
-        <!-- Excluir simulação por ID -->
-        <Label layoutX="400.0" layoutY="30.0" text="Delete by Simulation ID" />
-        <TextField fx:id="txtSimulationIdToDelete" layoutX="400.0" layoutY="50.0" promptText="Simulation ID..." />
-        <Button fx:id="btnDeleteById" layoutX="400.0" layoutY="80.0" text="Delete Simulation" onAction="#onClickBtnDeleteById" />
-
-        <!-- Excluir todas as simulações de um usuário -->
-        <Label layoutX="400.0" layoutY="130.0" text="Delete All Simulations by User ID" />
-        <TextField fx:id="txtUserIdToDeleteAll" layoutX="400.0" layoutY="150.0" promptText="User ID..." />
-        <Button fx:id="btnDeleteByUserId" layoutX="400.0" layoutY="180.0" text="Delete All by User" onAction="#onClickBtnDeleteByUserId" />
-
-        <!-- Limpar todas as simulações do banco -->
-        <Button fx:id="btnClearAllSimulations" layoutX="400.0" layoutY="230.0" prefWidth="200.0" text="Clear All Simulations" onAction="#onClickBtnClearAll" />
-
-        <!-- Listar simulações de um usuário -->
-        <Label layoutX="50.0" layoutY="350.0" text="List Simulations by User ID" />
-        <TextField fx:id="txtUserIdToList" layoutX="50.0" layoutY="370.0" promptText="User ID..." />
-        <Button fx:id="btnListByUser" layoutX="50.0" layoutY="400.0" text="List by User" onAction="#onClickBtnListByUserId" />
+        <Button fx:id="btnSaveSimulation" layoutX="400.0" layoutY="357.0" onAction="#onClickBtnSaveSimulation" text="Save Simulation" />
 
         <!-- Listar todas as simulações -->
-        <Button fx:id="btnListAllSimulations" layoutX="50.0" layoutY="450.0" prefWidth="200.0" text="List All Simulations" onAction="#onClickBtnListAll" />
+        <Button fx:id="btnListAllSimulations" layoutX="351.0" layoutY="425.0" onAction="#onClickBtnListAll" prefWidth="200.0" text="Ver Lista de Simulações" />
+      <RadioButton fx:id="rBtnBDieselB" layoutX="373.0" layoutY="253.0" mnemonicParsing="false" text="BDiesel Babaçu">
+         <toggleGroup>
+            <ToggleGroup fx:id="bioCombustivel" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rBtnBDieselM" layoutX="487.0" layoutY="253.0" mnemonicParsing="false" text="BDiesel Macaúba" toggleGroup="$bioCombustivel" />
+      <RadioButton fx:id="rBtnEtanol" layoutX="300.0" layoutY="253.0" mnemonicParsing="false" text="Etanol" toggleGroup="$bioCombustivel" />
+      <TextField fx:id="txtLitros" layoutX="373.0" layoutY="202.0" promptText="Litros" />
+      <Label layoutX="374.0" layoutY="277.0" text="Resultado" />
+      <Label layoutX="373.0" layoutY="120.0" text="Título" />
+      <TextField fx:id="txtTitle" layoutX="373.0" layoutY="138.0" promptText="Título" />
 
     </children>
 </AnchorPane>
