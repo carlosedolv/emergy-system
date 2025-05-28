@@ -6,7 +6,7 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="simulationResultDTO.ReportsController"
+            fx:controller="controller.ReportsController"
             fitToWidth="true"
             fitToHeight="true"
             prefWidth="900.0" prefHeight="650.0">

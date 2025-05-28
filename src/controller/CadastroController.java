@@ -4,7 +4,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import application.App;
@@ -12,33 +11,25 @@ import config.DatabaseConfig;
 import config.DatabaseInitializer;
 import gui.util.Alerts;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import model.entities.User;
 import services.UserService;
-import javafx.event.ActionEvent;
 
 public class CadastroController implements Initializable {
 
     @FXML private TextField txtName;
     @FXML private TextField txtEmail;
-    @FXML private TextField txtPassword;
+    @FXML private PasswordField txtPassword;
     @FXML private TextField txtDay;
     @FXML private TextField txtMonth;
     @FXML private TextField txtYear;
-    private App mainApp;
-
     @FXML private Button btnSignUp;
-
+    
+    private App mainApp;
     private UserService userService;
     
     public void setMainApp(App mainApp) {
@@ -83,7 +74,7 @@ public class CadastroController implements Initializable {
             user.setRegistrationDate(LocalDateTime.now());
             int id = userService.registerUser(user);
 
-            Alerts.showAlert("Sucesso", "Usuário ID: " + id + " salvo com sucesso!", "", Alert.AlertType.CONFIRMATION);
+            Alerts.showAlert("Sucesso", "Você está cadastrado! Faça o login.", "", Alert.AlertType.INFORMATION);
             clearFields();
             
             mainApp.showLoginView();
@@ -95,110 +86,6 @@ public class CadastroController implements Initializable {
             e.printStackTrace();
         }
     }
-    /*
-    @FXML
-    public void onClickBtnShowUsers() {
-        try {
-            List<User> users = userService.findAll();
-            if (users.isEmpty()) {
-                System.out.println("Nenhum usuário encontrado.");
-            } else {
-                System.out.println("Usuários cadastrados:");
-                users.forEach(System.out::println);
-            }
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao buscar usuários: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnClearUsers() {
-        try {
-            userService.deleteAll();
-            Alerts.showAlert("Sucesso", "Todos os usuários foram apagados!", "", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao apagar usuários: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnFindById() {
-        try {
-            String idStr = txtFindById.getText().trim();
-            if (idStr.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o ID do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            int id = Integer.parseInt(idStr);
-            User user = userService.findById(id);
-            if (user == null) {
-                Alerts.showAlert("Usuário não encontrado", "Usuário de ID: " + id + " não encontrado.", "", Alert.AlertType.ERROR);
-            } else {
-                System.out.println("Usuário encontrado: " + user);
-                Alerts.showAlert("Sucesso!", "Usuário encontrado.", "", Alert.AlertType.INFORMATION);
-            }
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao buscar usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnFindByEmail() {
-        try {
-            String email = txtFindByEmail.getText().trim();
-            if (email.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o Email do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            User user = userService.findByEmail(email);
-            if (user == null) {
-                Alerts.showAlert("Usuário não encontrado", "Usuário de email: " + email + " não encontrado.", "", Alert.AlertType.ERROR);
-            } else {
-                System.out.println("Usuário encontrado: " + user);
-                Alerts.showAlert("Sucesso!", "Usuário encontrado.", "", Alert.AlertType.INFORMATION);
-            }
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao buscar usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnRemoveById() {
-        try {
-            String idStr = txtIdToRemove.getText().trim();
-            if (idStr.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o ID do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            int id = Integer.parseInt(idStr);
-            userService.deleteById(id);
-            Alerts.showAlert("Sucesso!", "Usuário removido.", "", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao remover usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void onClickBtnRemoveByEmail() {
-        try {
-            String email = txtEmailToRemove.getText().trim();
-            if (email.isEmpty()) {
-                Alerts.showAlert("Campo obrigatório!", "Preencha o email do usuário", "Tente novamente.", Alert.AlertType.WARNING);
-                return;
-            }
-            userService.deleteByEmail(email);
-            Alerts.showAlert("Sucesso!", "Usuário removido.", "", Alert.AlertType.INFORMATION);
-        } catch (Exception e) {
-            Alerts.showAlert("Erro", "Erro ao remover usuário: " + e.getMessage(), "", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-*/
     
     private void clearFields() {
         txtName.clear();

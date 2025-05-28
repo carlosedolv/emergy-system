@@ -1,4 +1,4 @@
-package simulationResultDTO;
+package controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -36,32 +36,19 @@ public class ReportsController implements Initializable {
 	private int userId;
 	private int simId;
 	private ObservableList<Simulation> observableSimulation;
-	
-	@FXML
-	private ListView<Simulation> listViewReports;
-	
 	private SimulationService simulationService;
 	
-	@FXML
-	private Label lblTitulo;
-	@FXML
-	private Label lblTipo;
-	@FXML
-	private Label lblLitros;
-	@FXML
-	private Label lblResultado;
-	@FXML
-	private Button btnExport;
-	@FXML
-	private Button btnLogout;
-	@FXML
-	private Button btnCalculo;
-	@FXML
-	private CheckBox chkBar;
-	@FXML
-	private CheckBox chkPie;
-	@FXML
-	private CheckBox chkLine;
+	@FXML private Label lblTitulo;
+	@FXML private Label lblTipo;
+	@FXML private Label lblLitros;
+	@FXML private Label lblResultado;
+	@FXML private Button btnExport;
+	@FXML private Button btnLogout;
+	@FXML private Button btnCalculo;
+	@FXML private CheckBox chkBar;
+	@FXML private CheckBox chkPie;
+	@FXML private CheckBox chkLine;
+	@FXML private ListView<Simulation> listViewReports;
 
 	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;

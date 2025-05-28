@@ -2,9 +2,6 @@ package controller;
 
 import java.net.URL;
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import application.App;
@@ -15,19 +12,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.entities.User;
 import services.UserService;
 
 public class LoginController implements Initializable {
 
     @FXML private TextField txtEmail;
-    @FXML private TextField txtPassword;
+    @FXML private PasswordField txtPassword;
+    @FXML private Button btnSignIp;
+    
     private App mainApp;
     private int id;
-
-    @FXML private Button btnSignIp;
-
     private UserService userService;
     
     public void setMainApp(App mainApp) {
@@ -66,7 +62,7 @@ public class LoginController implements Initializable {
                 return;
             }
 
-            Alerts.showAlert("Sucesso", "Logado com sucesso. seja bem vindo(a)!", "", Alert.AlertType.INFORMATION);
+            Alerts.showAlert("Sucesso", "Seja bem vindo!", "", Alert.AlertType.INFORMATION);
             clearFields();
             
             

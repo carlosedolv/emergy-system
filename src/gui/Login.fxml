@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
@@ -12,7 +13,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextField fx:id="txtPassword" layoutX="321.0" layoutY="257.0" prefHeight="26.0" prefWidth="230.0" promptText="Your password..." />
+      <PasswordField fx:id="txtPassword" layoutX="321.0" layoutY="257.0" prefHeight="26.0" prefWidth="230.0" promptText="Your password..." />
       <TextField fx:id="txtEmail" layoutX="321.0" layoutY="203.0" prefHeight="26.0" prefWidth="230.0" promptText="Your email..." />
       <Label layoutX="321.0" layoutY="239.0" text="Password">
          <font>

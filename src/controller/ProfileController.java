@@ -23,12 +23,10 @@ public class ProfileController implements Initializable {
 	private User user;
 	private int userId;
 	private SimulationService simulationService;
-	@FXML
-	private Label lblName;
-	@FXML
-	private Label lblEmail;
-	@FXML
-	private Label lblBirthDay;
+	
+	@FXML private Label lblName;
+	@FXML private Label lblEmail;
+	@FXML private Label lblBirthDay;
 
 	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;

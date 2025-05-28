@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import controller.CadastroController;
 import controller.LoginController;
 import controller.ProfileController;
+import controller.ReportsController;
+import controller.SimulationViewController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +20,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.entities.User;
-import simulation.calculator.SimulationViewController;
-import simulationResultDTO.ReportsController;
 
 public class App extends Application {
 
